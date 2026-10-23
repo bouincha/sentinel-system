@@ -1,0 +1,18 @@
+# Secrets
+.env
+firmware/include/secrets.h
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Model weights and captures (downloaded / generated at runtime)
+*.pt
+*.jpg
+*.jpeg
+
+# PlatformIO / IDE
+.pio/
+.vscode/
+node_modules/

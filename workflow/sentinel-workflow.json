@@ -1,0 +1,546 @@
+[
+  {
+    "name": "Sentinel System",
+    "variables": {},
+    "secrets": {},
+    "nodes": [
+      {
+        "id": "4441e1e0-bf8f-44ea-b301-3be19931a008",
+        "position": {
+          "x": 147.66347515535043,
+          "y": -11.409544710930101
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "http-request",
+          "label": "HTTP Request",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Performs an HTTP request to a specified URL.",
+          "showRunningStatus": true,
+          "parameters": {
+            "method": "GET",
+            "authType": "none",
+            "responseType": "json",
+            "url": "https://YOUR-TUNNEL-SUBDOMAIN.loca.lt/test-detect"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "068470d4-1d91-4285-9b0f-0f6bbd61eda0",
+        "position": {
+          "x": 372.31187884662324,
+          "y": -18.79117917478382
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "function",
+          "label": "Function1",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Executes custom JavaScript code on the input data.",
+          "showRunningStatus": true,
+          "parameters": {
+            "code": "const bodyData = input.body;\n\nreturn {\n  person_detected: bodyData.person_detected,\n  confidence: bodyData.confidence * 100 +\"%\",\n  timestamp: bodyData.timestamp, \n  image_url: bodyData.image_url,\n  message: bodyData.message\n};"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "f7ab1a02-d8f9-43f0-ac43-cc0042c2b8e2",
+        "position": {
+          "x": -442.78393665418054,
+          "y": 190.2157421339675
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "function",
+          "label": "Function",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Executes custom JavaScript code on the input data.",
+          "showRunningStatus": true,
+          "parameters": {
+            "code": "const body = input.body || input;\n\nreturn {\n  event: body.event,\n  device_id: body.device_id,\n  motion: body.motion,\n  date: body.date,\n  time: body.time\n};"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "2ecab077-9c2c-4228-b7fb-18d7accad2b0",
+        "position": {
+          "x": 953.8110875190612,
+          "y": -44.13738784267156
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "function",
+          "label": "Function2",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Executes custom JavaScript code on the input data.",
+          "showRunningStatus": true,
+          "parameters": {
+            "code": "const confidencePercent = input.confidence;\nconst captureTime = input.timestamp;\nconst imageUrl = input.image_url;\n\nconst subject = `🚨 Alerte de sécurité — Mouvement suspect détecté (confiance : ${confidencePercent})`;\n\nconst bodyHtml = `\n  <div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; padding: 24px 0;\">\n    <div style=\"max-width: 620px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: 1px solid #e5e8eb;\">\n\n      <!-- En-tête -->\n      <div style=\"background-color: #c0392b; padding: 18px 24px; text-align: left;\">\n        <h1 style=\"color: #ffffff; font-size: 18px; margin: 0;\">🚨 Système de surveillance</h1>\n        <p style=\"color: #f8d7d5; font-size: 13px; margin: 4px 0 0;\">Alerte automatique — Détection de présence humaine</p>\n      </div>\n\n      <!-- Corps -->\n      <div style=\"padding: 24px; text-align: left; color: #333333;\">\n        <p style=\"font-size: 14px; margin-top: 0;\">\n          Une présence humaine a été détectée par le système de détection automatique. Voici les détails de l'événement :\n        </p>\n\n        <table style=\"width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;\">\n          <tr>\n            <td style=\"padding: 10px 0; border-bottom: 1px solid #eeeeee; width: 35%; color: #666666;\"><b>Heure de détection</b></td>\n            <td style=\"padding: 10px 0; border-bottom: 1px solid #eeeeee;\">${captureTime}</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 10px 0; border-bottom: 1px solid #eeeeee; color: #666666;\"><b>Taux de confiance</b></td>\n            <td style=\"padding: 10px 0; border-bottom: 1px solid #eeeeee;\">\n              <span style=\"background-color: #ffebe9; color: #c0392b; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 13px;\">\n                ${confidencePercent}\n              </span>\n            </td>\n          </tr>\n          <tr>\n            <td style=\"padding: 10px 0; color: #666666; vertical-align: top;\"><b>Remarques</b></td>\n            <td style=\"padding: 10px 0;\">${input.message}</td>\n          </tr>\n        </table>\n\n        <!-- Image -->\n        <p style=\"font-weight: bold; font-size: 14px; margin: 20px 0 8px;\">📷 Image capturée</p>\n        <div style=\"text-align: center;\">\n          <a href=\"${imageUrl}\" target=\"_blank\" style=\"text-decoration: none;\">\n            <img src=\"${imageUrl}\" alt=\"Capture de détection\" style=\"max-width: 100%; height: auto; border-radius: 10px; border: 1px solid #e5e8eb; box-shadow: 0 4px 10px rgba(0,0,0,0.08);\" />\n          </a>\n        </div>\n        <p style=\"text-align: center; margin-top: 12px; font-size: 12px; color: #888888;\">\n          Si l'image ne s'affiche pas, <a href=\"${imageUrl}\" style=\"color: #2e78d6; text-decoration: none; font-weight: bold;\">cliquez ici pour la consulter</a>\n        </p>\n      </div>\n\n      <!-- Pied de page -->\n      <div style=\"background-color: #f8f9fa; padding: 14px 24px; text-align: center; border-top: 1px solid #eeeeee;\">\n        <p style=\"font-size: 11px; color: #999999; margin: 0;\">\n          Ceci est un message automatique généré par le système de surveillance. Merci de ne pas répondre à cet e-mail.\n        </p>\n      </div>\n\n    </div>\n  </div>\n`;\n\nreturn {\n    ...input,\n    email_subject: subject,\n    email_body: bodyHtml\n};"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "e27d41db-4969-4a0e-9a95-3545f73db1cd",
+        "position": {
+          "x": 601.0927818716532,
+          "y": -28.639431741501863
+        },
+        "type": "utility",
+        "width": 64,
+        "height": 68,
+        "data": {
+          "name": "if-else",
+          "label": "If-Else",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "true": {
+              "label": "True"
+            },
+            "false": {
+              "label": "False"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Executes different branches based on a condition",
+          "showRunningStatus": false,
+          "parameters": {
+            "condition": "input.person_detected === true"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "793c07b2-5cb7-425d-a8ff-b48eeedcdf1c",
+        "position": {
+          "x": 1150.574192244905,
+          "y": -51.90654790760461
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "gmail",
+          "label": "Gmail1",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Consolidated Gmail operations (send/get/trash/delete/move/markRead/markUnread/createLabel/listLabels)",
+          "showRunningStatus": true,
+          "parameters": {
+            "operation": "send",
+            "refreshToken": "YOUR_GOOGLE_REFRESHTOKEN",
+            "clientSecret": "YOUR_GOOGLE_CLIENTSECRET",
+            "clientId": "YOUR_GOOGLE_CLIENTID",
+            "bodyType": "html",
+            "to": [
+              "your-email@example.com"
+            ],
+            "subject": {
+              "$expr": "output",
+              "node": "Function2",
+              "outputId": "success",
+              "path": "email_subject"
+            },
+            "html": {
+              "$expr": "output",
+              "node": "Function2",
+              "outputId": "success",
+              "path": "email_body"
+            },
+            "attachments": []
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "bc29e2cc-27c5-4654-9451-06cf128e8b3b",
+        "position": {
+          "x": -56.41810907125061,
+          "y": 1.4045597512548085
+        },
+        "type": "utility",
+        "width": 64,
+        "height": 68,
+        "data": {
+          "name": "if-else",
+          "label": "If-Else1",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "true": {
+              "label": "True"
+            },
+            "false": {
+              "label": "False"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Executes different branches based on a condition",
+          "showRunningStatus": false,
+          "parameters": {
+            "condition": "input.motion === true"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "1b69129e-e8e7-4b9b-a463-77f623c1e3ee",
+        "position": {
+          "x": -451.12339681504596,
+          "y": -136.65133232864784
+        },
+        "type": "trigger",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "mqtt-trigger",
+          "label": "MQTT Trigger",
+          "inputs": {},
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Triggers when messages arrive on MQTT topics",
+          "showRunningStatus": true,
+          "parameters": {
+            "protocol": "mqtt",
+            "qos": "0",
+            "host": "broker.hivemq.com",
+            "topics": [
+              "sentinel/YOUR_UNIQUE_ID/events"
+            ]
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "2ed32418-f1d8-4cfb-aab6-f948695bd758",
+        "position": {
+          "x": -629.8483460820687,
+          "y": 198.54194930366242
+        },
+        "type": "trigger",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "webhook",
+          "label": "Webhook Trigger",
+          "inputs": {},
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Triggers workflow on incoming HTTP requests",
+          "showRunningStatus": false,
+          "parameters": {
+            "method": "all",
+            "auth": {
+              "type": "none"
+            },
+            "respondType": "immediate",
+            "path": "/postman"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "2fb028d6-d3c0-40ed-9abc-b939110ac220",
+        "position": {
+          "x": 958.0355625649175,
+          "y": 173.36735099455484
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "mqtt-publish",
+          "label": "MQTT Publish",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Publish messages to MQTT topics",
+          "showRunningStatus": true,
+          "parameters": {
+            "protocol": "mqtt",
+            "qos": "0",
+            "host": "broker.hivemq.com",
+            "topic": "sentinel/YOUR_UNIQUE_ID/commands",
+            "message": "{   \"command\": \"ALARM_ON\",   \"led\": true,   \"buzzer\": true }"
+          },
+          "_morphing": false
+        },
+        "selected": false
+      },
+      {
+        "id": "01c00012-81b0-4fce-a42f-e159b9c334c2",
+        "position": {
+          "x": 953.0267835401826,
+          "y": -277.75157943628477
+        },
+        "type": "action",
+        "width": 64,
+        "height": 64,
+        "data": {
+          "name": "google-sheets-values",
+          "label": "history",
+          "inputs": {
+            "input": {
+              "label": "Input"
+            }
+          },
+          "outputs": {
+            "success": {
+              "label": "Success"
+            },
+            "error": {
+              "label": "Error"
+            }
+          },
+          "description": "Value operations for Google Sheets (append/update/get)",
+          "showRunningStatus": true,
+          "parameters": {
+            "operation": "append",
+            "clientSecret": "YOUR_GOOGLE_CLIENTSECRET",
+            "clientId": "YOUR_GOOGLE_CLIENTID",
+            "refreshToken": "YOUR_GOOGLE_REFRESHTOKEN",
+            "range": "Sheet1",
+            "spreadsheetId": "YOUR_SPREADSHEET_ID",
+            "values": [
+              "{{outputs.Function1.success.timestamp}}",
+              "{{outputs.Function1.success.person_detected}}",
+              "{{outputs.Function1.success.confidence}}",
+              "{{outputs.Function1.success.image_url}}"
+            ]
+          },
+          "_morphing": false
+        },
+        "selected": false
+      }
+    ],
+    "connections": [
+      {
+        "source": "2ed32418-f1d8-4cfb-aab6-f948695bd758",
+        "sourceHandle": "success",
+        "target": "f7ab1a02-d8f9-43f0-ac43-cc0042c2b8e2",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__2ed32418-f1d8-4cfb-aab6-f948695bd758success-f7ab1a02-d8f9-43f0-ac43-cc0042c2b8e2input",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "f7ab1a02-d8f9-43f0-ac43-cc0042c2b8e2",
+        "sourceHandle": "success",
+        "target": "bc29e2cc-27c5-4654-9451-06cf128e8b3b",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__f7ab1a02-d8f9-43f0-ac43-cc0042c2b8e2success-bc29e2cc-27c5-4654-9451-06cf128e8b3binput",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "1b69129e-e8e7-4b9b-a463-77f623c1e3ee",
+        "sourceHandle": "success",
+        "target": "bc29e2cc-27c5-4654-9451-06cf128e8b3b",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__1b69129e-e8e7-4b9b-a463-77f623c1e3eesuccess-bc29e2cc-27c5-4654-9451-06cf128e8b3binput",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "bc29e2cc-27c5-4654-9451-06cf128e8b3b",
+        "sourceHandle": "true",
+        "target": "4441e1e0-bf8f-44ea-b301-3be19931a008",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__bc29e2cc-27c5-4654-9451-06cf128e8b3btrue-4441e1e0-bf8f-44ea-b301-3be19931a008input",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "4441e1e0-bf8f-44ea-b301-3be19931a008",
+        "sourceHandle": "success",
+        "target": "068470d4-1d91-4285-9b0f-0f6bbd61eda0",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__4441e1e0-bf8f-44ea-b301-3be19931a008success-068470d4-1d91-4285-9b0f-0f6bbd61eda0input",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "068470d4-1d91-4285-9b0f-0f6bbd61eda0",
+        "sourceHandle": "success",
+        "target": "e27d41db-4969-4a0e-9a95-3545f73db1cd",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__068470d4-1d91-4285-9b0f-0f6bbd61eda0success-e27d41db-4969-4a0e-9a95-3545f73db1cdinput",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "e27d41db-4969-4a0e-9a95-3545f73db1cd",
+        "sourceHandle": "true",
+        "target": "01c00012-81b0-4fce-a42f-e159b9c334c2",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__e27d41db-4969-4a0e-9a95-3545f73db1cdtrue-01c00012-81b0-4fce-a42f-e159b9c334c2input",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "e27d41db-4969-4a0e-9a95-3545f73db1cd",
+        "sourceHandle": "true",
+        "target": "2fb028d6-d3c0-40ed-9abc-b939110ac220",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__e27d41db-4969-4a0e-9a95-3545f73db1cdtrue-2fb028d6-d3c0-40ed-9abc-b939110ac220input",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "e27d41db-4969-4a0e-9a95-3545f73db1cd",
+        "sourceHandle": "true",
+        "target": "2ecab077-9c2c-4228-b7fb-18d7accad2b0",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__e27d41db-4969-4a0e-9a95-3545f73db1cdtrue-2ecab077-9c2c-4228-b7fb-18d7accad2b0input",
+        "data": {
+          "isAnimated": false
+        }
+      },
+      {
+        "source": "2ecab077-9c2c-4228-b7fb-18d7accad2b0",
+        "sourceHandle": "success",
+        "target": "793c07b2-5cb7-425d-a8ff-b48eeedcdf1c",
+        "targetHandle": "input",
+        "type": "directed",
+        "id": "xy-edge__2ecab077-9c2c-4228-b7fb-18d7accad2b0success-793c07b2-5cb7-425d-a8ff-b48eeedcdf1cinput",
+        "data": {
+          "isAnimated": false
+        }
+      }
+    ],
+    "status": "stopped",
+    "tracingEnabled": true,
+    "version": 1,
+    "publishedNames": [],
+    "folderId": null
+  }
+]
